@@ -1,0 +1,32 @@
+{
+  "name": "rangama",
+  "version": "1.0.0",
+  "description": "Speed based anagram game with letter/word swapping options",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoreyDH/Rangama.git"
+  },
+  "author": "Corey H, Armin G, Juan P",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CoreyDH/Rangama/issues"
+  },
+  "homepage": "https://github.com/CoreyDH/Rangama#readme",
+  "dependencies": {
+    "anagramica": "^1.0.3",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "mysql": "^2.12.0",
+    "sequelize": "^3.25.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}
