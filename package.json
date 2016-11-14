@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/CoreyDH/Rangama#readme",
   "dependencies": {
+    "anagram": "^0.4.0",
     "anagramica": "^1.0.3",
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
