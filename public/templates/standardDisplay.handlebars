@@ -1,0 +1,16 @@
+<div class="col-xs-12 text-center">
+    <ul class="word">
+        {{word}}
+    </ul>
+</div>
+
+<div class="anagrams-wrapper col-xs-12">
+    {{#each anagrams}}
+        <h3>{{@key}} Letter Word</h3>
+        <ul id="{{@key}}-words" class="anagrams">
+            {{#each this}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    {{/each}}
+</div>
