@@ -61,9 +61,9 @@ router.get('/rangama/anagram/:word', function (req, res) {
 
         anagram.init('./dict/twl06.js', function (err) {
             if (err) throw err;
+
             anagram.findAnagrams(req.params.word, function (err, anagrams) {
                 console.log('`%s`: found %d anagrams', anagrams.input, anagrams.count);
-
 
                 json.word = anagrams.input;
                 json.anagrams = Helper.filterAnagrams(anagrams.items);
