@@ -5,3 +5,96 @@ body {
     color: #c8c8c8;
     background-color: #272b30;
 }
+
+.chosen-word, .anagram-words, .anagram-letters  {
+    list-style: none;
+    -webkit-padding-start: 0;
+}
+
+.chosen-word > li, .anagram-letters > li {
+    display: inline-block;
+}
+
+.chosen-word > li {
+    margin: 10px 0;
+}
+
+.chosen-letter {
+    width: 55px;
+    height: 55px;
+    text-transform: uppercase;
+    font-size: 25px;
+    box-shadow: 0px 5px 0px #27738a;
+    border: none;
+    position: relative;
+}
+
+.chosen-letter:active {
+    top: 5px;
+}
+
+.chosen-letter:hover {
+    background-color: #2da3c5;
+}
+
+.chosen-letter-score {
+    font-size: 15px;
+    position: absolute;
+    top: 35px;
+    right: 5px;
+    color: #afedff;
+}
+
+.anagrams-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.anagram-words-wrapper {
+    display: inline-block;
+    margin: auto;
+    vertical-align: top;
+}
+
+.anagram-words {
+    margin: 0 10px;
+}
+
+.anagram-letter {
+    width: 30px;
+    height: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+}
+
+.user-input-wrapper {
+    text-align: center;
+}
+
+#user-input {
+    display: block;
+    min-width: 500px;
+    border-radius: 20px;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px;
+    margin: auto;
+    font-family: sans-serif;
+    font-size: 18px;
+    appearance: none;
+    box-shadow: none;
+    border: 1px solid transparent;
+}
+
+#user-input:focus,
+#user-input.focus {
+  border: 1px solid #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 3px 1px #4ab9db;
+  outline: none;
+}
+
+.swap-warning {
+    color: #fff;
+    font-size: 14px;
+}
