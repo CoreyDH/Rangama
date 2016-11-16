@@ -12,7 +12,7 @@ function generateAnagram( callback) {
 
 
   var lettersCount = 6;
-  var minKeys = 4;
+  var minKeys = 3;
   var maxKeys = 12;
   var consonantCount;
   var vowelCount;
@@ -32,9 +32,9 @@ function generateAnagram( callback) {
 
 
   // set the number of vowels (vowelCount) to 2 or 3, random
-  for (i = 0; i<100; i++) {
+  //for (i = 0; i<100; i++) {
    vowelCount = Math.floor((Math.random() * 2 ) + 2);
-  }
+ // }
 
   // set the consonantCount based on the vowelCount
   consonantCount = lettersCount - vowelCount;
@@ -56,61 +56,69 @@ function generateAnagram( callback) {
       index++;
   }
 
+  // create a string of the consonants and vowels
   var letters ='';
   for (i=0; i<letterArray.length; i++) {
     letters = letters.concat (letterArray[i]);
   }
-  //returnObject.letters = letters;
 
+  // call anagramica npm to get anagram keys
   anagramica.all(letters, function(error, response) {
-   if (error) {
-      throw error;
-    }
+    if (error) {
+      callback (-1);
+      }
+    
+      if (response.all.length - 6 < minKeys) {    // if not enough keys to begin with, return -1
+        callback (-1);
+      }
 
-    var length = response.all.length - lettersCount;   // the number of keys in the array is the response length minus 6
-    if ( length < minKeys || length > maxKeys) {
-     callback(-1);
-    }
-    else {
-     for (i = 0; i< length; i++) {
-       keys [ i ] = response.all [ i ];
-      }  
+      k = 0;
+      for (i = 0; i < response.all.length; i++) {
+        if (response.all [ i ].length > 2) {       // do not pickup answers that are less than 2 characters
+         keys [ k ] = response.all [ i ];
+         k++;
+        }       
+      }
+
+      if ( !keys[minKeys-1] || keys[maxKeys] ) {    // if there are not 3 keys or more than 12 keys, return -1
+       //  callback(-1);
+       }
+          
      returnObject.keys= keys;
      returnObject.letters = letters;
      callback(0, returnObject);
-    }
+    
   }); 
 }
 
 
-
+//
 //  Begin app
 
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-	host: 'localhost',
+  host: 'localhost',
 	user: 'armingutzmer',
 	password: 'Wildcats75',
 	database: 'rangama_prototype1_db'
 });
 
+var tableMaxRows = 25;
+var i;
 
 connection.connect(function (err) {
 	if (err) {
-		console.error('error connecting: ' + err.stack);
+		console.error('error connecting to database: ' + err.stack);
 		return;
 	}
 	console.log('DATABASE CONNECTION SUCCESSFULL id ' + connection.threadId);
 });
 
-
-
-for (i=0; i<20; i++) {
+  for (i=0; i<120; i++) {
   var x = generateAnagram( function(err, response){
 
   	if (err == -1)  {
-  		console.log ("anagram error.  try again")
   	}
    	else {
       	var recordString = "('" + response.letters + "'";
@@ -121,13 +129,10 @@ for (i=0; i<20; i++) {
       	}
 
       	recordString = recordString.concat(")");
-		var queryString = "INSERT INTO armin3 (item, key1,key2,key3,key4,key5,key6,key7,key8,key9,key10,key11,key12,key13,key14,key15) VALUES ";
-		queryString = queryString.concat(recordString);
-
-		console.log ( "\n\n\n\queryString = ", queryString, "\n\n\n" );
-
-		connection.query(queryString, function (err, result) {
-			console.log ("insert result = ", err)
+		    var queryString = "INSERT INTO armin212 (item, key1,key2,key3,key4,key5,key6,key7,key8,key9,key10,key11,key12,key13,key14,key15) VALUES ";
+		    queryString = queryString.concat(recordString);
+		    connection.query(queryString, function (err, result) {
+       console.log ("\n\n\nqueryString = ", queryString, "\n\ninsert result = ", err)
 		});
 	}				
   });
