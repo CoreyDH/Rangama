@@ -43,7 +43,7 @@ var word = {
 		else 
 			return false;
 	},
-	retrieveHighScores: function(score, callback) {
+	retrieveHighScores: function(callback) {
 		// retrieve high score and return into callback function ordered by descending order.
 		orm.all('top_score', function(data){
 			console.log(data);
