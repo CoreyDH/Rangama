@@ -59,12 +59,12 @@ var orm = {
     //     });
     // },
 
-    // retrieveHighScores: function(table, id, cb) {
-    //     connection.query('SELECT * FROM  ' + table + ' SET ?', [vals], function(err, result) {
-    //         if (err) throw err;
-    //         cb(result);
-    //     });
-    // },
+    retrieveHighScores: function(table, scores,cb) {
+        connection.query('SELECT * FROM ' + table + ' ORDER BY ' + scores + ' DESC LIMIT 10;', function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+    },
 
 
 
