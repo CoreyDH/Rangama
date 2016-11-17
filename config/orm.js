@@ -18,8 +18,8 @@ function printQuestionMarks(num) {
 
 var orm = {
     all: function(tableInput, cb) {
-        var query = 'SELECT * FROM ?';
-        connection.query(query, function(err, result) {
+
+        connection.query('SELECT * FROM ?', [tableInput], function(err, result) {
             if (err) throw err;
             cb(result);
         });
