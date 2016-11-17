@@ -18,7 +18,7 @@ function printQuestionMarks(num) {
 
 var orm = {
     all: function(tableInput, cb) {
-        var query = 'SELECT * FROM ' ? ? ';';
+        var query = 'SELECT * FROM ?';
         connection.query(query, function(err, result) {
             if (err) throw err;
             cb(result);
@@ -27,7 +27,6 @@ var orm = {
 
     // vals is an array of values that we want to insert
     create: function(table, vals, cb) {
-
         connection.query('INSERT INTO ' + table + ' SET ?', [vals], function(err, result) {
             if (err) throw err;
             cb(result);
@@ -41,8 +40,6 @@ var orm = {
         connection.query('UPDATE ' + table + ' SET ? WHERE ?', [updateVals, condition], function(err, result) {
             if (err) throw err;
             cb(result);
-
-            ;
         });
     },
     delete: function(table, id, cb) {
@@ -52,7 +49,24 @@ var orm = {
             cb(result);
             var query = 'DELETE FROM ' + table;
         });
-    }
+    },
+
+    // submitScore: function(table, id, cb) {
+    //     connection.query('INSERT INTO ' + table + ' SET ?', [vals], function(err, result) {
+    //         if (err) throw err;
+    //         cb(result);
+    //     });
+    // },
+
+    // retrieveHighScores: function(table, id, cb) {
+    //     connection.query('SELECT * FROM  ' + table + ' SET ?', [vals], function(err, result) {
+    //         if (err) throw err;
+    //         cb(result);
+    //     });
+    // },
+
+
+
 };
 
 module.exports = orm;

@@ -6,6 +6,13 @@ var router = express.Router();
 // var scrabbler = require('scrabbler');
 var anagram = require('anagram');
 var Helper = require('./helper.js');
+var db = require('../models/word.js');
+
+// db.submitScore('John', 3000, function(data) {
+
+// });
+
+
 
 
 router.get('/', function (req, res) {
@@ -18,6 +25,14 @@ router.get('/rangama', function (req, res) {
 
 router.get('/rangama/standard', function (req, res) {
     res.render('standard', {});
+});
+
+router.get('/rangama/top_scores', function (req, res) {
+
+    db.retrieveHighScores(function(scores) {
+        res.render('top_scores', scores);
+    });
+    
 });
 
 router.get('/rangama/anagram/:word', function (req, res) {
