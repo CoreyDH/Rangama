@@ -244,3 +244,8 @@ button:focus button.focus {
 footer {
     margin-top: 30px;
 }
+
+.credits {
+    background: rgba(0,0,0,0.7);
+    padding: 5px;
+}
