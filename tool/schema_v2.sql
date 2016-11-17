@@ -1,7 +1,7 @@
 
 CREATE DATABASE  `rangama_prototype1_db`;
 
-CREATE TABLE `rangama_prototype1_db.rp1table` (
+CREATE TABLE `rangama_prototype1_db.armin510` (
 	`id` Int( 11 ) AUTO_INCREMENT NOT NULL,
 	`item` VARCHAR( 12) NOT NULL,
 	`key1` VARCHAR( 12 ),
@@ -19,5 +19,20 @@ CREATE TABLE `rangama_prototype1_db.rp1table` (
 	`key13` VARCHAR( 12 ),
 	`key14` VARCHAR( 12 ),
 	`key15` VARCHAR( 12 ),
+	`key16` VARCHAR( 12 ),
+	`key17` VARCHAR( 12 ),
+	`key18` VARCHAR( 12 ),
+	`key19` VARCHAR( 12 ),
+	`key20` VARCHAR( 12 ),
+	`key21` VARCHAR( 12 ),
+	`key22` VARCHAR( 12 ),
+	`key23` VARCHAR( 12 ),
+	`key24` VARCHAR( 12 ),
+	`key25` VARCHAR( 12 ),
+	`key26` VARCHAR( 12 ),
+	`key27` VARCHAR( 12 ),
+	`key28` VARCHAR( 12 ),
+	`key29` VARCHAR( 12 ),
+	`key30` VARCHAR( 12 ),
 
 	PRIMARY KEY ( `id` )); 
