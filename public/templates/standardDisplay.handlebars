@@ -2,7 +2,7 @@
     <div class="chosen-word-wrapper col-xs-12 text-center">
         <ul class="chosen-word">
             {{#each (split word)}}
-            <li><button type="button" class="chosen-letter btn btn-info btn-lg">{{this}}<span class="chosen-letter-score">3</span></button></li>
+            <li data-letter="{{this}}"><button type="button" class="chosen-letter btn btn-info btn-lg">{{this}}<span class="chosen-letter-score">3</span></button></li>
             {{/each}}
         </ul>
     </div>
@@ -19,29 +19,27 @@
 </div>
 
 <div class="row">
-    <div class="alert alert-danger alert-dismissible">
+    <div class="alert">
     </div>
 </div>
 
 <div class="row">
     <div class="anagrams-wrapper col-xs-12">
-    {{#each anagrams}}
-    <div class="anagram-words-wrapper">
-        <h5>{{@key}} Letter Words</h5>
-        <ul id="{{@key}}-words" class="anagram-words">
-            {{#each this}}
-            <li>
-                <ul class="anagram-letters">
-                    {{#each (split this)}}
-                    <li class="anagram-letter"></li>
-                    {{/each}}
-                </ul>
-                
-            </li>
-            {{/each}}
-        </ul>
+        {{#each anagrams}}
+        <div class="anagram-words-wrapper">
+            <h5>{{@key}} Letter Words</h5>
+            <ul id="{{@key}}-words" class="anagram-words">
+                {{#each this}}
+                <li>
+                    <ul class="anagram-letters">
+                        {{#each (split this)}}
+                        <li class="anagram-letter"></li>
+                        {{/each}}
+                    </ul>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        {{/each}}
     </div>
-    {{/each}}
 </div>
-</div>
-
