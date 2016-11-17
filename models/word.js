@@ -22,6 +22,7 @@ var word = {
 		orm.delete('words', id, function(err, data) {
 			callback(data);
 		});
+
 	},
 	submitScore: function(playerName, score, callback) {
 		// orm.all('top_score', function(data) {
