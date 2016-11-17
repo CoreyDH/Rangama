@@ -30,6 +30,7 @@ router.get('/rangama/standard', function (req, res) {
 router.get('/rangama/top_scores', function (req, res) {
 
     db.retrieveHighScores(function(scores) {
+        console.log(scores);
         res.render('top_scores', scores);
     });
     
