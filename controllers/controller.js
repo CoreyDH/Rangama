@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 // var rangama = require('../models/model.js');
 // var anagramica = require('anagramica');
-// var scrabbler = require('scrabbler');
+var scrabbler = require('scrabbler');
 var anagram = require('anagram');
 var Helper = require('./helper.js');
 
@@ -79,22 +79,27 @@ router.get('/rangama/anagram/:word', function (req, res) {
             });
         });
 
+        // scrabbler.get(word, function(error, data) {
+        //     if(error) throw error;
+
+        //     console.log(data);
+        //     res.json(data);
+
+        // });
+
     } else {
 
         // Send blank object
         res.json({});
     }
 
+});
 
+router.get('/rangama/anagram/random', function (req, res) {
 
-    // scrabbler.get(req.params.word, function(error, data) {
-    //     if(error) throw error;
+    // Your code
 
-    //     console.log(data);
-    //     res.json(data);
-
-    // });
-
+    // res.json(anagramObject);
 });
 
 router.get('/rangama/anagram/best/:word', function (req, res) {

@@ -4,6 +4,7 @@ $(function () {
         var Rangama = function (playerName) {
             this.anagram = {};
             this.chosen = [];
+            this.lastInput = [];
             this.score = 0;
             this.bestWord = '';
 
@@ -64,30 +65,39 @@ $(function () {
                 var key = String.fromCharCode(event.which).toLowerCase();
                 var keyCode = event.which;
                 var keyIndex = self.chosen.indexOf(key);
-                var deleteKeys = [8, 46];
-                var otherKeys = [45, 13, 127, 37, 38, 39, 40, 16];
-                var isDeleteKey = deleteKeys.indexOf(keyCode) !== -1; // Backspace, Delete
-                var isOtherKey = otherKeys.indexOf(keyCode) !== -1; //  Arrow Keys, Insert
+                var deleteKeys = [8, 46]; // Backspace, Delete
+                var otherKeys = [13, 45, 13, 127, 37, 38, 39, 40, 16]; //  Arrow Keys, Insert
+                var isDeleteKey = deleteKeys.indexOf(keyCode) !== -1; 
+                var isOtherKey = otherKeys.indexOf(keyCode) !== -1;
+                var isEnterKey =  otherKeys.indexOf(keyCode) === 0;
                 var isSpecialKey = otherKeys.concat(deleteKeys).indexOf(keyCode) !== -1; // Any special key
-                var $textInput = $(this).val();
+                var currentValue = $(this).val().split('');
 
                 if (
                     keyIndex !== -1 // Check if key exists in word.
-                    && $textInput.length <= self.anagram.word.length // Check if it is not greater than the available letters.
+                    && currentValue.length <= self.anagram.word.length // Check if it is not greater than the available letters.
                     || isSpecialKey // Special characters are always allowed.
                 ) {
                     
                     // If it's a letter, remove from chosen array.
                     if(!isSpecialKey) {
-                        self.chosen.splice(keyIndex, 1);
+                        // self.lastInput.push(self.chosen[keyIndex]); 
+                        // self.chosen.splice(keyIndex, 1);
                     } else {
                         // If backspace or delete, re-add letters
-                        if(isDeleteKey) {
-                            // Look at array diff, find the difference and add back to self.chosen
-                            if(self.latestInput) {
-                                self.chosen.push(arr_diff($textInput, self.latestInput));
-                            }
-                            
+                        // if(isDeleteKey) {
+                        //     // Look at array diff, find the difference and add back to self.chosen
+                        //     if(self.lastInput) {
+                        //         console.log('latest:' + self.lastInput, 'chosen:' + self.chosen, 'text:' + currentValue);
+                        //         self.chosen.concat(arr_diff(currentValue, self.lastInput));
+                        //         self.lastInput = currentValue;
+                        //     } 
+                        // }
+
+                        if(isEnterKey) {
+                            // Check if word entered exists.
+                            self.checkWord(currentValue);
+                            $(this).val('');
                         }
 
                     }
@@ -98,10 +108,26 @@ $(function () {
                     console.log(keyCode, 'prevented');
                 }
             });
+        };
 
-            $('#user-input').on('keyup', function() {
-                self.latestInput = $(this).val();
-            });
+        Rangama.prototype.checkWord = function(userGuess) {
+
+            var anagramAray = this.anagram.anagrams[userGuess.length+''];
+            if(anagramAray) {
+                userGuess = userGuess.join('');
+
+                for(var i=0; i < anagramAray.length; i++) {
+                    if(userGuess === anagramAray[i]) {
+                        console.log(userGuess);
+                        
+
+                        return true;
+                    }
+                }
+
+            }
+
+            return false;
         };
 
         Rangama.prototype.addScore = function(score) {
@@ -121,6 +147,23 @@ $(function () {
                 dataType: 'json',
             });
         };
+
+        Rangama.prototype.displayError = function(msg) {
+            var $alert = $('.alert');
+
+            
+
+            $alert.text(msg);
+            $('.alert').alert();
+
+            $alert.stop().show();
+
+            setTimeout(function() {
+                $('.alert').fadeOut();
+            }, 500);
+        };
+
+        var game = new Rangama();
 
         // Helper functions
         function arr_diff (a1, a2) {
@@ -151,7 +194,7 @@ $(function () {
             return word.split('');
         });
 
-        var player = new Rangama();
+        
 
     })(jQuery);
 })
