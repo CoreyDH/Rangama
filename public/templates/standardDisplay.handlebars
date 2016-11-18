@@ -2,7 +2,7 @@
     <div class="chosen-word-wrapper col-xs-12 text-center">
         <ul class="chosen-word">
             {{#each (split word)}}
-            <li data-letter="{{this}}"><button type="button" class="chosen-letter btn btn-info btn-lg">{{this}}<span class="chosen-letter-score">3</span></button></li>
+            <li data-letter="{{this}}"><button type="button" class="chosen-letter btn btn-info btn-lg">{{this}}<span class="chosen-letter-score">{{getScore this}}</span></button></li>
             {{/each}}
         </ul>
     </div>

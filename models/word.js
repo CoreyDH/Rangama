@@ -65,6 +65,9 @@ var word = {
 		orm.update('player', updateObj, conditionObj, function (data) {
 			callback(data);
 		});
+	},
+	getWords: function(callback) {
+		orm.getWords(callback);
 	}
 };
 
