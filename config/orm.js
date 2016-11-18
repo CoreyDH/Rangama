@@ -52,12 +52,12 @@ var orm = {
         });
     },
 
-    // submitScore: function(table, id, cb) {
-    //     connection.query('INSERT INTO ' + table + ' SET ?', [vals], function(err, result) {
-    //         if (err) throw err;
-    //         cb(result);
-    //     });
-    // },
+    submitScore: function(table, id, cb) {
+        connection.query('INSERT INTO ' + table + ' SET ?', [vals], function(err, result) {
+            if (err) throw err;
+            cb(result);
+        });
+    },
 
     retrieveHighScores: function(table,cb) {
         connection.query('SELECT * FROM ' + table + ' ORDER BY topScore DESC LIMIT 10;', function(err, result) {

@@ -3,5 +3,5 @@ module.exports = {
   host: 'localhost',
   user: 'root', // username
   password: '234400', // password
-  database: 'anagram_db' // database
+  database: 'word' // database
 };
