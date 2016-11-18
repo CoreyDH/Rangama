@@ -49,11 +49,11 @@ var wordObject = { word: '', score: 0};
 var anagramObject = {
     word: '',
     anagrams: {
-        three: [],         
-        four: [],        
-        five: [],
-        six: [],        
-        seven: []
+        3: [],         
+        4: [],        
+        5: [],
+        6: [],        
+        7: []
     }
 }
 
@@ -68,7 +68,7 @@ var connection = mysql.createConnection({
 });
 
 var key, keyNumber, keyQuery, keyWord;
-var databaseMax = 140;
+var databaseMax = 180;
 var keysMax = 30;
 
 console.log ("\n\nGOT TO RANDOM!!!!!!\n\n");
@@ -97,21 +97,21 @@ connection.query(queryString, function (err, result) {    //read in the record
        switch (keyWord.length) {
 
         case 3:
-          anagramObject.anagrams.three.push({
+          anagramObject.anagrams.3.push({
           word: keyWord,
           score: total
           });
           break;
 
         case 4:
-          anagramObject.anagrams.four.push({
+          anagramObject.anagrams.4.push({
           word: keyWord,
           score: total
           });
           break;
 
         case 5:
-          anagramObject.anagrams.five.push({
+          anagramObject.anagrams.5.push({
           word: keyWord,
           score: total
           });
@@ -119,14 +119,14 @@ connection.query(queryString, function (err, result) {    //read in the record
 
 
         case 6:
-          anagramObject.anagrams.six.push({
+          anagramObject.anagrams.6.push({
           word: keyWord,
           score: total
           });
           break;
 
         case 7:
-          anagramObject.anagrams.seven.push({
+          anagramObject.anagrams.7.push({
           word: keyWord,
           score: total
           });
@@ -138,43 +138,43 @@ connection.query(queryString, function (err, result) {    //read in the record
 
       console.log ("\nthree letter words ---");
       for (i=0;i<30;i++) {
-        if (!anagramObject.anagrams.three[i]) {
+        if (!anagramObject.anagrams.3[i]) {
           break;
         }
-        console.log (anagramObject.anagrams.three[i]);
+        console.log (anagramObject.anagrams.3[i]);
       }
 
       console.log ("\nfour letter words ---");  
       for (i=0;i<30;i++) {
-         if (!anagramObject.anagrams.four[i]) {
+         if (!anagramObject.anagrams.4[i]) {
           break;
         }
-        console.log (anagramObject.anagrams.four[i]);
+        console.log (anagramObject.anagrams.4[i]);
       }
 
       console.log ("\nfive letter words ---");      
       for (i=0;i<30;i++) {
-          if (!anagramObject.anagrams.five[i]) {
+          if (!anagramObject.anagrams.5[i]) {
           break;
         }
-        console.log (anagramObject.anagrams.five[i]);
+        console.log (anagramObject.anagrams.5[i]);
       }
 
       console.log ("\nsix letter words ---");
  
       for (i=0;i<30;i++) {
-        if (!anagramObject.anagrams.six[i]) {
+        if (!anagramObject.anagrams.6[i]) {
           break;
         }
-        console.log (anagramObject.anagrams.six[i]);
+        console.log (anagramObject.anagrams.6[i]);
       }
 
       console.log ("\nseven letter words ---");     
       for (i=0;i<30;i++) {
-        if (!anagramObject.anagrams.seven[i]) {
+        if (!anagramObject.anagrams.7[i]) {
           break;
         }
-        console.log (anagramObject.anagrams.seven[i]);
+        console.log (anagramObject.anagrams.7[i]);
       }
 
         res.json(anagramObject);
