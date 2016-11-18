@@ -17,6 +17,9 @@
   "dependencies": {
     "jquery": "^3.1.1",
     "bootstrap": "^3.3.7",
-    "handlebars": "^4.0.5"
+    "handlebars": "^4.0.5",
+    "normalize-css": "^5.0.0",
+    "sweetalert": "^1.1.3",
+    "animatesprite": "^1.3.5"
   }
 }

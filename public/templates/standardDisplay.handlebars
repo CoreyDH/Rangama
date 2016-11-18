@@ -1,16 +1,45 @@
-<div class="col-xs-12 text-center">
-    <ul class="word">
-        {{word}}
-    </ul>
-</div>
-
-<div class="anagrams-wrapper col-xs-12">
-    {{#each anagrams}}
-        <h3>{{@key}} Letter Word</h3>
-        <ul id="{{@key}}-words" class="anagrams">
-            {{#each this}}
-            <li>{{this}}</li>
+<div class="row">
+    <div class="chosen-word-wrapper col-xs-12 text-center">
+        <ul class="chosen-word">
+            {{#each (split word)}}
+            <li data-letter="{{this}}"><button type="button" class="chosen-letter btn btn-info btn-lg">{{this}}<span class="chosen-letter-score">3</span></button></li>
             {{/each}}
         </ul>
-    {{/each}}
+    </div>
+</div>
+
+<div class="row">
+    <div class="user-input-wrapper col-xs-12">
+        <input type="text" id="user-input" placeholder="Press Enter to Submit Word" />
+        <p class="swap-warning">SHIFT PRESSED: LETTER WILL BE SWAPPED!</p>
+    </div>
+    <div class="col-xs-12 text-center">
+        <a type="button" id="generate-word" class="btn btn-success">Generate New Word</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="alert">
+    </div>
+</div>
+
+<div class="row">
+    <div class="anagrams-wrapper col-xs-12">
+        {{#each anagrams}}
+        <div class="anagram-words-wrapper">
+            <h5>{{@key}} Letter Words</h5>
+            <ul id="{{@key}}-words" class="anagram-words">
+                {{#each this}}
+                <li>
+                    <ul class="anagram-letters">
+                        {{#each (split this)}}
+                        <li class="anagram-letter"></li>
+                        {{/each}}
+                    </ul>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+        {{/each}}
+    </div>
 </div>

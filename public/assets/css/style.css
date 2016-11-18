@@ -1,7 +1,251 @@
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Lato', Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #c8c8c8;
     background-color: #272b30;
+    background-image: url('../img/bg.jpg');
+    background-position: fixed;
+    background-repeat: no-repeat;
+}
+
+button:focus button.focus {
+    outline:0 !important;
+}
+
+.title, .chosen-word, .anagram-words, .anagram-letters  {
+    list-style: none;
+    -webkit-padding-start: 0;
+}
+
+.title > li, .chosen-word > li, .anagram-letters > li {
+    display: inline-block;
+}
+
+.chosen-word > li, .title > li {
+    margin: 10px 0;
+}
+
+.title-wrapper {
+    text-align: center;
+    margin-top:30px;
+    background-image: url('../img/hollywood.jpg');
+    background-repeat: repeat-x;
+    height: 284px;
+    border-top: 7px solid #fff;
+    border-bottom: 7px solid #fff;
+    box-shadow: 0px 1px 0px 1px #000;
+    padding-top: 200px;
+    margin-bottom: 75px;
+}
+
+/*.title {
+    background-color: rgba(0,0,0,0.5);
+    padding: 3px 10px;
+    padding-top: 1px;
+    display: inline-block;
+    margin: auto;
+}*/
+
+.title > li > .btn, .chosen-letter {
+    text-transform: uppercase;
+    border: none;
+    position: relative;
+}
+
+.title > li > .btn {
+    width: 125px;
+    height: 125px;
+    font-size: 75px;
+    border: 3px solid rgba(0,0,0,0.3);
+}
+
+.title > li > .btn > span {
+    font-size: 30px;
+    position: absolute;
+    top: 75px;
+    right: 7px;
+    color: rgba(255,255,255,0.6);
+}
+
+.title > li > .btn:active {
+    top: 5px;
+    box-shadow: none;
+}
+
+.title > li > .btn.btn-danger {
+    background: #c3356a;
+    box-shadow: 0px 5px 0px #961f4c;
+}
+
+.title > li > .btn.btn-danger:hover {
+    background: #961f4c;
+}
+
+.title > li > .btn.btn-info {
+    box-shadow: 0px 5px 0px #27738a;
+}
+
+.title > li > .btn.btn-success {
+    box-shadow: 0px 5px 0px #469246;
+}
+
+.title > li > .btn.btn-warning {
+    box-shadow: 0px 5px 0px #bd7003;
+}
+
+.main-menu {
+    text-align: center;
+}
+.game-mode {
+    padding: 20px;
+    background-color: rgba(0,0,0,0.7);
+    border: 1px solid #0a0a0a;
+    border-radius: 10px;
+    width: 300px;
+    margin: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.game-mode:hover {
+    border: 3px solid #2da3c5;
+}
+
+.sprite {
+    height: 140px;
+    width: 108px;
+    margin: auto;
+}
+
+#scott {
+    background-image: url('../img/scottpilgrim_multiple.png');
+}
+
+#ramona {
+    background-image: url('../img/ramonaflowers_multiple.png');
+}
+
+.not-yet {
+    position: absolute;
+    font-size: 20px;
+    background-color: rgba(195,53,106,0.5);
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    left: 0;
+}
+
+.chosen-letter {
+    width: 55px;
+    height: 55px;
+    box-shadow: 0px 5px 0px #27738a;
+    font-size: 25px;
+}
+
+.chosen-letter:active {
+    top: 5px;
+}
+
+.chosen-letter:hover {
+    background-color: #2da3c5;
+}
+
+.chosen-letter-score {
+    font-size: 15px;
+    position: absolute;
+    top: 35px;
+    right: 5px;
+    color: #afedff;
+}
+
+.anagrams-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.anagram-words-wrapper {
+    display: inline-block;
+    margin: auto;
+    vertical-align: top;
+}
+
+.anagram-words {
+    margin: 0 10px;
+}
+
+.anagram-words > li {
+    margin: 5px 0;
+}
+
+.anagram-letter {
+    width: 30px;
+    height: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    text-transform: uppercase;
+}
+
+.user-input-wrapper {
+    text-align: center;
+}
+
+#user-input {
+    display: block;
+    min-width: 500px;
+    border-radius: 20px;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px;
+    margin: auto;
+    font-family: sans-serif;
+    font-size: 18px;
+    appearance: none;
+    box-shadow: none;
+    border: 1px solid transparent;
+}
+
+#user-input:focus,
+#user-input.focus {
+  border: 1px solid #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 3px 1px #4ab9db;
+  outline: none;
+}
+
+.swap-warning {
+    color: #fff;
+    font-size: 14px;
+}
+
+.alert {
+    margin: 5px 0;
+    visibility: hidden;
+    text-align: center;
+    color: red;
+}
+
+#anagram-timer {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: right;
+}
+
+#anagram-score {
+    font-size: 32px;
+    font-weight: 600;
+    color: green;
+}
+
+.swap-warning {
+    visibility: hidden;
+}
+
+footer {
+    margin-top: 30px;
+}
+
+.credits {
+    background: rgba(0,0,0,0.7);
+    padding: 5px;
 }

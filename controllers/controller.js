@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 // var rangama = require('../models/model.js');
 // var anagramica = require('anagramica');
-// var scrabbler = require('scrabbler');
+var scrabbler = require('scrabbler');
 var anagram = require('anagram');
 var Helper = require('./helper.js');
 
@@ -42,8 +42,6 @@ router.get('/rangama/anagram/random', function (req, res) {
     }
     return (total);
   }
-
-
 
 // objects for main app
 var wordObject = { word: '', score: 0};
