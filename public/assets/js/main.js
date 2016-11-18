@@ -23,12 +23,19 @@ $(function () {
 
             this.unloadEventListeners();
 
+            var msg = 'The timer has ended, you scored: <strong>' + self.score + '</strong><br />';
+
+            if (self.score > 0) {
+                msg += '<small>Submit your Score</small><br /> <div class="form-inline"><div class="form-group"><input type="text" id="player-name" class="form-control" style="display: block !important" placeholder="Enter your Name"> <a id="submit-score" class="btn btn-success">SUBMIT</a>';
+            }
+
             swal({
+                html: true,
                 title: "Game Over",
-                text: "The timer has ended, you scored: " + self.score,
+                text: msg,
                 type: "success",
                 showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#c3356a",
                 confirmButtonText: "Play Again?",
                 closeOnConfirm: true
             }, function () {
@@ -112,13 +119,6 @@ $(function () {
             return $.get('/rangama/anagram/get/' + word.match(/[a-z]/gi).join(''), function (data) {
 
                 console.log(data);
-                // self.anagram = data;
-                // self.chosen = data.word.split('');
-                // self.word = data.word;
-
-                // // Create an empty array of the anagrams
-                // self.answered = Helper.getEmptyKeys(data.anagrams);
-                // console.log(self.answered);
                 self.setValues(data);
 
                 return data;
@@ -134,7 +134,7 @@ $(function () {
 
             // Create an empty array of the anagrams
             self.answered = Helper.getEmptyKeys(data.anagrams);
-            console.log(self.answered);
+            // console.log(self.answered);
         };
 
         Rangama.prototype.loadTemplate = function (name, data, selector) {
@@ -147,6 +147,7 @@ $(function () {
 
                 $(selector || '#anagram-game').html(html);
                 self.loadEventListeners();
+                $("#user-input").focus();
             });
         };
 
@@ -155,11 +156,47 @@ $(function () {
 
             var self = this;
 
+            self.unloadEventListeners();
+
+            $('.sweet-alert').on('click', '#submit-score', function (event) {
+
+                var name = $(this).parent().find('#player-name').val();
+                self.submitScore(name || 'guest');
+
+            });
+
+            $('[data-toggle="popover"]').popover();
+
             $('#generate-word').on('click', function (e) {
-                console.log('fired button click');
-                self.getAnagram('hello').then(function (data) {
-                    self.loadTemplate('standardDisplay', data);
-                });
+                self.getRandomWord();
+            });
+
+            $('#submit-word').on('click', function (event) {
+                self.submitWord($('#user-input').val().split(''));
+            });
+
+            $('#clear-word').on('click', function (event) {
+                $('#user-input').val('');
+            });
+
+            $('body').on('keydown', function (event) {
+                var keyCode = event.which;
+
+                if (keyCode === 192) {
+                    event.preventDefault();
+
+                    var newScore = 0 - Helper.getScrabblePoints(self.word);
+
+                    if ((self.score + newScore) < 0) {
+                        self.resetScore();
+                    } else {
+                        self.addScore(newScore);
+                    }
+
+                    self.getRandomWord();
+
+                }
+
             });
 
             $('#user-input').on('keydown', function (event) {
@@ -197,27 +234,8 @@ $(function () {
                         // }
 
                         if (isEnterKey) {
-                            // Check if word entered exists.
-                            if (self.checkWord(currentValue)) {
-                                self.displayError('Word was found: ' + currentValue.join('') + '!', 'success');
-
-                                // Check if all anagrams were found
-                                if (Helper.checkMatching(self.anagram.anagrams, self.answered)) {
-                                    self.getRandomWord();
-                                }
-                            } else {
-                                self.displayError('Word not found or already used!');
-                            }
-
-                            $(this).val('');
+                            self.submitWord(currentValue);
                         }
-
-                        if (keyCode === 192) {
-                            event.preventDefault();
-                            self.addScore(0 - Helper.getScrabblePoints(self.word));
-                            self.getRandomWord();
-                        }
-
                     }
 
                 } else if (keyCode === 16) {
@@ -242,11 +260,43 @@ $(function () {
                 }
 
             });
+
+            $('.chosen-letter').on('click', function (event) {
+                var letter = $(this).data('letter');
+                $('#user-input').val($('#user-input').val() + letter);
+            });
         };
 
         Rangama.prototype.unloadEventListeners = function () {
             $('#user-input').off();
+            $('body').off();
+            $('#generate-word').off();
+            $('#submit-word').off();
+            $('#clear-word').off();
+            $('.chosen-letter').off();
+        };
 
+        Rangama.prototype.submitWord = function (currentValue) {
+
+            if (currentValue.length === 0) {
+                return;
+            }
+
+            var self = this;
+
+            // Check if word entered exists.
+            if (self.checkWord(currentValue)) {
+                self.displayError('Word was found: ' + currentValue.join('').toUpperCase() + '!', 'success');
+
+                // Check if all anagrams were found
+                if (Helper.checkMatching(self.anagram.anagrams, self.answered)) {
+                    self.getRandomWord();
+                }
+            } else {
+                self.displayError('Word NOT found or already used!');
+            }
+
+            $('#user-input').val('');
         };
 
         Rangama.prototype.checkWord = function (userGuess) {
@@ -301,16 +351,16 @@ $(function () {
         };
 
         Rangama.prototype.displayScore = function () {
-            $('#anagram-score').text(this.score);
+            $('#anagram-score > span').text(this.score);
         };
 
-        Rangama.prototype.submitScore = function (playerName, totalScore) {
+        Rangama.prototype.submitScore = function (playerName) {
             $.ajax({
                 type: "POST",
                 url: 'rangama/score/submit',
                 data: {
                     name: playerName,
-                    score: totalScore
+                    score: self.score
                 },
                 dataType: 'json',
             });
@@ -318,26 +368,27 @@ $(function () {
 
         Rangama.prototype.displayError = function (msg, type) {
             var $alert = $('.alert');
+            type = type || 'warning';
 
-            $alert.text(msg);
-            $('.alert').alert();
+            $alert.text(msg).removeClass('alert-success').removeClass('alert-warning').addClass('alert-' + type);
+            $alert.alert();
 
-            $alert.stop().css({
-                visibility: 'visible'
-            });
+            $alert.stop().fadeIn();
 
             setTimeout(function () {
-                $('.alert').css({
-                    visibility: 'hidden'
-                });
-            }, 500);
+                $alert.fadeOut();
+            }, 2000);
         };
 
 
         if ($('.standard-mode').length > 0) {
-            var game = new Rangama();
 
-            game.startGame();
+            $('#start-game').on('click', function () {
+                var game = new Rangama();
+
+                game.startGame();
+                $(this).parent().hide();
+            });
         }
 
 
@@ -422,6 +473,7 @@ $(function () {
             getScrabblePoints: function (word) {
                 var scrablePoints = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10];
                 var index;
+                word = word.toLowerCase();
 
                 total = 0;
                 for (i = 0; i < word.length; i++) {

@@ -35,6 +35,12 @@ router.get('/rangama/top_scores', function(req, res) {
 
 });
 
+router.get('/rangama/howto', function(req, res) {
+
+    res.render('howto', {});
+
+});
+
 router.get('/rangama/anagram/get/:word', function(req, res) {
 
     // console.log(req.params.word);

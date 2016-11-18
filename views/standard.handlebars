@@ -3,9 +3,23 @@
         <div class="standard-mode">
             <div class="anagram-card col-xs-12">
                 <div class="row">
-                    <div id="anagram-score" class="col-xs-12 col-sm-6">0</div>
-                    <div id="anagram-timer" class="col-xs-12 col-sm-6">0:00</div>
+                    <div id="anagram-score" class="col-xs-12 col-sm-4">SCORE: <span>0</span></div>
+                    <div id="anagram-controls" class="col-xs-12 col-sm-4 text-center">
+                        <a class="btn btn-default" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="Hotkeys" data-content="[~ / `] Key - Generates New Word">
+                            Controls
+                        </a>
+                    </div>
+                    <div id="anagram-timer" class="col-xs-12 col-sm-4">0:00</div>
                 </div>
+            </div>
+
+            <div class="col-xs-12">
+                <div class="alert">
+                </div>
+            </div>
+            <div class="col-xs-12 text-center">
+                <a href="#" id="start-game" class="btn btn-success">Begin Game</a>
+                <h3>You'll have a 2 minute time limit.</h3>
             </div>
 
             <div id="anagram-game" class="col-xs-12"></div>

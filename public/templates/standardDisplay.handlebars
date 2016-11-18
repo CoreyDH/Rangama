@@ -2,7 +2,7 @@
     <div class="chosen-word-wrapper col-xs-12 text-center">
         <ul class="chosen-word">
             {{#each (split word)}}
-            <li data-letter="{{this}}"><button type="button" class="chosen-letter btn btn-info btn-lg">{{this}}<span class="chosen-letter-score">{{getScore this}}</span></button></li>
+            <li><button type="button" class="chosen-letter btn btn-info btn-lg" data-letter="{{this}}">{{this}}<span class="chosen-letter-score">{{getScore this}}</span></button></li>
             {{/each}}
         </ul>
     </div>
@@ -13,13 +13,10 @@
         <input type="text" id="user-input" placeholder="Press Enter to Submit Word" />
         <p class="swap-warning">SHIFT PRESSED: LETTER WILL BE SWAPPED!</p>
     </div>
-    <div class="col-xs-12 text-center">
-        <a type="button" id="generate-word" class="btn btn-success">Generate New Word</a>
-    </div>
-</div>
-
-<div class="row">
-    <div class="alert">
+    <div class="form-buttons col-xs-12 text-center">
+        <a type="button" id="generate-word" class="btn btn-success">Generate New Word</a> 
+        <a type="button" id="submit-word" class="btn btn-warning">Submit Word</a> 
+        <a type="button" id="clear-word" class="btn btn-danger">Clear</a> 
     </div>
 </div>
 
