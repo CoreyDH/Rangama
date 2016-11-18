@@ -65,6 +65,33 @@ var orm = {
             cb(result);
         });
     },
+    getWords: function(callback) {
+            //
+        // begin
+        //
+
+        var key, keyNumber, keyQuery, keyWord;
+        var databaseMax = 180;
+        var keysMax = 30;
+
+        console.log("\n\nGOT TO RANDOM!!!!!!\n\n");
+
+        //**** randomly select an id number
+        id = Math.floor((Math.random() * databaseMax) + 1);
+        console.log("db record id = ", id);
+
+
+        // build a query string
+        var queryString = "SELECT * FROM words WHERE id='"
+        queryString = queryString.concat(id.toString());
+        queryString = queryString.concat("'");
+
+        // get the record and process it
+        connection.query(queryString, function (err, result) {
+            if(err) throw err;
+            callback(result);
+        }); 
+    }
 
 
 

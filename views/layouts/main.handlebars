@@ -2,23 +2,72 @@
 <html lang="en">
 
 <head>
-    <!--<link rel="stylesheet" href="/bower_components/normalize-css/normalize.css">-->
-    <link href="https://bootswatch.com/slate/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
     <title>Rangama - An Anagram Word Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://bootswatch.com/slate/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/bower_components/sweetalert/dist/sweetalert.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            {{{ body }}}
+    <div class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">
+            <span style="color:#c3556a">R</span>
+            <span style="color:#f89406">A</span>
+            <span style="color:#5bc0de">N</span>
+            <span style="color:#62c462">G</span>
+            <span style="color:#c3556a">A</span>
+            <span style="color:#f89406">M</span>
+            <span style="color:#5bc0de">A</span>
+          </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
         </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Game Modes <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="/rangama/standard">Standard</a></li>
+                <li class="divider"></li>
+                <li class="disabled"><a href="#">Time Attack</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="/rangama/top_scores">Scoreboard</a>
+            </li>
+            <li>
+              <a href="/rangama/howto">How to Play</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a>v0.01</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
+    
+    {{{body}}}
+
+    <footer>
+        <div class="credits text-center">
+            Designed by Corey H &middot; Developed by Corey H, Armin G, Juan P
+        </div>
+    </footer>
 
     <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/bower_components/handlebars/handlebars.min.js"></script>
+    <script type="text/javascript" src="/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript" src="/bower_components/animatesprite/scripts/jquery.animateSprite.min.js"></script>
     <script type="text/javascript" src="/assets/js/main.js"></script>
+    <script type="text/javascript" src="/assets/js/title.js"></script>
 </body>
 
 

@@ -63,4 +63,4 @@ CREATE TABLE word.nimra (
 	key29 VARCHAR( 12 ),
 	key30 VARCHAR( 12 ),
 	PRIMARY KEY ( id ));
-	
+
