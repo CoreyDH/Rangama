@@ -214,7 +214,7 @@ $(function () {
 
                         if (keyCode === 192) {
                             event.preventDefault();
-                            self.addScore(0 - Helper.getScrabblePoints(self.word)*2);
+                            self.addScore(0 - Helper.getScrabblePoints(self.word));
                             self.getRandomWord();
                         }
 
