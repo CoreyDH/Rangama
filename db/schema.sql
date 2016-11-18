@@ -1,4 +1,6 @@
 #MYSQL SCHEMA GOES HERE
+CREATE DATABASE anagram_db;
+
 USE anagram_db;
 
 CREATE TABLE `word` (
@@ -25,4 +27,5 @@ CREATE TABLE anagram_db.top_score (
 	topScoreId INTEGER ( 10 ) AUTO_INCREMENT NOT NULL,
 	playerName VARCHAR ( 255 ),
 	topScore INTEGER ( 10 ),
+	
 	PRIMARY KEY (topScoreId));
