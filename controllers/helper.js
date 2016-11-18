@@ -3,6 +3,7 @@ module.exports = {
     filterAnagrams: function (obj) {
 
         var newObj = {};
+        var self = this;
 
         Object.keys(obj).forEach(function (key) {
 
@@ -12,7 +13,10 @@ module.exports = {
 
             // Flatten array, remove unnecessary w, f keys
             newObj[key] = obj[key].map(function (val) {
-                return val.w;
+                return {
+                    word: val.w,
+                    score: self.getScrabblePoints(val.w)
+                };
             });
 
         });
@@ -33,5 +37,16 @@ module.exports = {
         var newArr = str.split('').map(function (character) {
             
         });
+    },
+    getScrabblePoints: function (word) {
+        var scrablePoints = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
+        var index;
+
+        total = 0;
+        for (i=0; i<word.length; i++) {
+        index = word.charCodeAt(i) - 97;
+        total = total + scrablePoints[index];
+        }
+        return (total);
     }
 };

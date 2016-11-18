@@ -32,7 +32,7 @@
                 {{#each this}}
                 <li>
                     <ul class="anagram-letters">
-                        {{#each (split this)}}
+                        {{#each (split this.word)}}
                         <li class="anagram-letter"></li>
                         {{/each}}
                     </ul>

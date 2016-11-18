@@ -8,10 +8,11 @@ $(function () {
             this.lastInput = [];
             this.score = 0;
             this.bestWord = '';
-            this.timeLimit = 5; // minutes
+            this.timeLimit = 1; // minutes
         };
 
         Rangama.prototype.startGame = function () {
+            this.score = 0;
             this.newAnagram();
             this.timer().start();
         };
@@ -24,14 +25,14 @@ $(function () {
 
             swal({
                 title: "Game Over",
-                text: "The timer has ended, you scored: X",
+                text: "The timer has ended, you scored: "+self.score,
                 type: "success",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Play Again?",
                 closeOnConfirm: true
             }, function() {
-                self.newAnagram(1);
+                self.startGame();
             });
         };
 
@@ -145,7 +146,7 @@ $(function () {
                 var keyCode = event.which;
                 var keyIndex = self.chosen.indexOf(key);
                 var deleteKeys = [8, 46]; // Backspace, Delete
-                var otherKeys = [13, 45, 13, 127, 37, 38, 39, 40, 16]; //  Arrow Keys, Insert
+                var otherKeys = [13, 45, 13, 127, 37, 38, 39, 40, 16, 192]; //  Arrow Keys, Insert
                 var isDeleteKey = deleteKeys.indexOf(keyCode) !== -1;
                 var isOtherKey = otherKeys.indexOf(keyCode) !== -1;
                 var isEnterKey = otherKeys.indexOf(keyCode) === 0;
@@ -189,9 +190,16 @@ $(function () {
                             $(this).val('');
                         }
 
+                        if(keyCode === 192) {
+                            event.preventDefault();
+                            self.newAnagram();
+                        }
+
                     }
 
                 } else if(keyCode === 16) {
+
+                    self.swapLetter();
 
                     $('.swap-warning').css({
                         visibility : 'visible'
@@ -227,14 +235,14 @@ $(function () {
                 userGuess = userGuess.join('');
 
                 for (var i = 0; i < anagramArr.length; i++) {
-                    if (userGuess === anagramArr[i]) {
+                    if (userGuess === anagramArr[i].word) {
                         console.log(userGuess);
 
                         // Add to answer object
-                        this.answered[keyIndex].push(anagramArr[i]);
+                        this.answered[keyIndex].push(anagramArr[i].word);
 
                         // Add to score
-                        // this.addScore(anagramArr.score);
+                        this.addScore(anagramArr[i].score);
 
                         // Display word
                         this.displayWord(userGuess, keyIndex, i);
@@ -260,6 +268,7 @@ $(function () {
         Rangama.prototype.addScore = function (score) {
             if (!isNaN(score)) {
                 this.score += score;
+                $('#anagram-score').text(this.score);
             }
         };
 
