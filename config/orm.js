@@ -59,8 +59,8 @@ var orm = {
     //     });
     // },
 
-    retrieveHighScores: function(table, scores,cb) {
-        connection.query('SELECT * FROM ' + table + ' ORDER BY ' + scores + ' DESC LIMIT 10;', function(err, result) {
+    retrieveHighScores: function(table,cb) {
+        connection.query('SELECT * FROM ' + table + ' ORDER BY topScore DESC LIMIT 10;', function(err, result) {
             if (err) throw err;
             cb(result);
         });

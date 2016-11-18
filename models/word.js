@@ -45,19 +45,18 @@ var word = {
 	},
 	retrieveHighScores: function(callback) {
 		// retrieve high score and return into callback function ordered by descending order.
-		orm.all('top_score', function(data){
-			console.log(data);
-			[
-				{
-				name: 'John',
-				score: 5000
-				},
+		orm.retrieveHighScores('top_score', function(data){
+			// [
+			// 	{
+			// 	name: 'John',
+			// 	score: 5000
+			// 	},
 
-				{
-				name: 'Sam',
-				score: 300
-				}
-			]
+			// 	{
+			// 	name: 'Sam',
+			// 	score: 300
+			// 	}
+			// ]
 			callback(data); 
 		});
 	},
