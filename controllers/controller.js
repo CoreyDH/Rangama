@@ -142,7 +142,7 @@ router.get('/rangama/anagram/random', function(req, res) {
             var anagramObject = {
                 word: '',
                 anagrams: {}
-            }
+            };
 
             anagramObject.word = result[0].item;  // put the scrambled letters in the json
 
@@ -205,17 +205,20 @@ router.get('/rangama/anagram/best/:word', function(req, res) {
 });
 
 
-// router.post('/rangama/create', function (req, res) {
+router.post('/rangama/create', function (req, res) {
+	// if(req.body.playerName) {
+	// 	rangama.create({ playerName: req.body.playerName }, function () {
+	// 		res.redirect('/rangama');
 
-// 	if(req.body.burger_name) {
-// 		burger.create({ burger_name: req.body.burger_name, devoured: 0 }, function () {
-// 			res.redirect('/burgers');
-// 		});
-// 	} else {
-// 		res.redirect('/burgers');
-// 	}
+    rangama.create(['playerName', 'score'], [req.body.playerName, req.body.score], function (){
 
-// });
+ //    })
+	// 	});
+	// } else {
+		res.redirect('/rangama');
+	});
+
+});
 
 // router.put('/rangama/update/:id', function (req, res) {
 

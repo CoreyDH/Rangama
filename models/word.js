@@ -50,11 +50,6 @@ var word = {
 			// 	{
 			// 	name: 'John',
 			// 	score: 5000
-			// 	},
-
-			// 	{
-			// 	name: 'Sam',
-			// 	score: 300
 			// 	}
 			// ]
 			callback(data); 

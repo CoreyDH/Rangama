@@ -9,7 +9,7 @@ CREATE TABLE word.game (
 	gameTimeLimit INTEGER ( 10 ),
 	PRIMARY KEY (gameId));
 
-CREATE TABLE word.word (
+CREATE TABLE word.words (
 	id INTEGER( 11 ) AUTO_INCREMENT NOT NULL,
     word VARCHAR ( 255 ) NOT NULL,
 	threeLetters VARCHAR( 255 ) NOT NULL,
@@ -61,6 +61,6 @@ CREATE TABLE word.nimra (
 	key27 VARCHAR( 12 ),
 	key28 VARCHAR( 12 ),
 	key29 VARCHAR( 12 ),
-	key30 VARCHAR( 12 ),
+	key30 VARCHAR( 12 ),	
 	PRIMARY KEY ( id ));
 

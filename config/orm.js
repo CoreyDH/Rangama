@@ -52,8 +52,8 @@ var orm = {
         });
     },
 
-    submitScore: function(table, id, cb) {
-        connection.query('INSERT INTO ' + table + ' SET ?', [vals], function(err, result) {
+    submitScore: function(table, id, score, cb) {
+        connection.query('INSERT INTO ' + table + ' ?' + ' ? ', [vals], [vals], function(err, result) {
             if (err) throw err;
             cb(result);
         });
@@ -82,7 +82,7 @@ var orm = {
 
 
         // build a query string
-        var queryString = "SELECT * FROM words WHERE id='"
+        var queryString = "SELECT * FROM words WHERE id='";
         queryString = queryString.concat(id.toString());
         queryString = queryString.concat("'");
 
