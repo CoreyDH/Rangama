@@ -20,82 +20,169 @@ router.get('/rangama/standard', function (req, res) {
     res.render('standard', {});
 });
 
-router.get('/rangama/anagram/:word', function (req, res) {
-
-    // console.log(req.params.word);
-
-    // var json = {};
-
-    // json.word = req.params.word.match(/[A-Z]/gi).join('');
-
-    // anagramica.all(json.word, function(error, response) {
-
-    //     if (error) {
-    //         throw error;
-    //     }
-
-    //     json.anagrams = helper.getMinWordLength(response.all);
-
-    //     anagramica.best(json.word, function(error, response) {
-    //         if (error) {
-    //             throw error;
-    //         }
-
-    //         console.log(response);
-
-    //         json.best = response.best;
-
-    //         res.json(json);
-    //     });
-
-    // });
 
 
-    var json = {};
 
-    // Ignore special or numerical characters
-    var word = req.params.word.match(/[a-z]/gi).join('');
+//////**************  MY STUFF
 
-    // If there is still a word afterwards
-    if (word) {
+router.get('/rangama/anagram/random', function (req, res) {
 
-        anagram.init('./dict/twl06.js', function (err) {
-            if (err) throw err;
-            anagram.findAnagrams(req.params.word, function (err, anagrams) {
-                console.log('`%s`: found %d anagrams', anagrams.input, anagrams.count);
+ // var anagramica = require('anagramica');
+  var mysql = require('mysql');
 
+  // function that calculates scrable points for answer words
+  function getScrablePoints (word) {
+    var scrablePoints = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
+    var index;
 
-                json.word = anagrams.input;
-                json.anagrams = Helper.filterAnagrams(anagrams.items);
-
-                // Get the longest words
-                var anagramsKeys = Object.keys(anagrams.items); // Set keys to an array
-
-                // Get the object from the last key in the anagrams.items object
-                json.best = anagrams.items[anagramsKeys[anagramsKeys.length - 1]];
-
-                // console.log(anagrams);
-                res.json(json);
-            });
-        });
-
-    } else {
-
-        // Send blank object
-        res.json({});
+    total = 0;
+    for (i=0; i<word.length; i++) {
+      index = word.charCodeAt(i) - 97
+      total = total + scrablePoints[index];
     }
+    return (total);
+  }
 
 
 
-    // scrabbler.get(req.params.word, function(error, data) {
-    //     if(error) throw error;
+// objects for main app
+var wordObject = { word: '', score: 0};
 
-    //     console.log(data);
-    //     res.json(data);
+var anagramObject = {
+    word: '',
+    anagrams: {
+        three: [],         
+        four: [],        
+        five: [],
+        six: [],        
+        seven: []
+    }
+}
 
-    // });
-
+//
+// begin
+//
+var connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'armingutzmer',
+  password: 'Wildcats75',
+  database: 'rangama_prototype1_db'
 });
+
+var key, keyNumber, keyQuery, keyWord;
+var databaseMax = 140;
+var keysMax = 30;
+
+console.log ("\n\nGOT TO RANDOM!!!!!!\n\n");
+
+//**** randomly select an id number
+id = Math.floor((Math.random() * databaseMax) + 1); 
+console.log ("db record id = ", id);
+
+
+// build a query string
+var queryString = "SELECT * FROM rangama_prototype1_db.armin512 WHERE id='"
+queryString = queryString.concat(id.toString());
+queryString = queryString.concat("'");
+
+// get the record and process it
+connection.query(queryString, function (err, result) {    //read in the record
+
+      anagramObject.word = result[0].item;  // put the scrambled letters in the json
+
+      for (key = 1; key<keysMax; key++) {   // push the answers and their scores in the json
+        keyNumber = key.toString();
+        keyQuery = "result[0].key".concat(keyNumber);   // creates a string like "result[0].key3" to reference data
+        keyWord = eval(keyQuery);        // turn data into a string called keyWord
+        var score =  getScrablePoints (keyWord);   // calculates a scrabble score for that keyWord
+
+       switch (keyWord.length) {
+
+        case 3:
+          anagramObject.anagrams.three.push({
+          word: keyWord,
+          score: total
+          });
+          break;
+
+        case 4:
+          anagramObject.anagrams.four.push({
+          word: keyWord,
+          score: total
+          });
+          break;
+
+        case 5:
+          anagramObject.anagrams.five.push({
+          word: keyWord,
+          score: total
+          });
+          break;
+
+
+        case 6:
+          anagramObject.anagrams.six.push({
+          word: keyWord,
+          score: total
+          });
+          break;
+
+        case 7:
+          anagramObject.anagrams.seven.push({
+          word: keyWord,
+          score: total
+          });
+          break;
+       }     
+      }
+
+      console.log ("stem = ", anagramObject.word);
+
+      console.log ("\nthree letter words ---");
+      for (i=0;i<30;i++) {
+        if (!anagramObject.anagrams.three[i]) {
+          break;
+        }
+        console.log (anagramObject.anagrams.three[i]);
+      }
+
+      console.log ("\nfour letter words ---");  
+      for (i=0;i<30;i++) {
+         if (!anagramObject.anagrams.four[i]) {
+          break;
+        }
+        console.log (anagramObject.anagrams.four[i]);
+      }
+
+      console.log ("\nfive letter words ---");      
+      for (i=0;i<30;i++) {
+          if (!anagramObject.anagrams.five[i]) {
+          break;
+        }
+        console.log (anagramObject.anagrams.five[i]);
+      }
+
+      console.log ("\nsix letter words ---");
+ 
+      for (i=0;i<30;i++) {
+        if (!anagramObject.anagrams.six[i]) {
+          break;
+        }
+        console.log (anagramObject.anagrams.six[i]);
+      }
+
+      console.log ("\nseven letter words ---");     
+      for (i=0;i<30;i++) {
+        if (!anagramObject.anagrams.seven[i]) {
+          break;
+        }
+        console.log (anagramObject.anagrams.seven[i]);
+      }
+
+        res.json(anagramObject);
+});
+});
+
 
 router.get('/rangama/anagram/best/:word', function (req, res) {
 

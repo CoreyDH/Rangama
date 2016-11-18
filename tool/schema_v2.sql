@@ -1,7 +1,7 @@
 
-CREATE DATABASE  `rangama_prototype1_db`;
+CREATE DATABASE  rangama_prototype1_db;
 
-CREATE TABLE `rangama_prototype1_db.armin510` (
+CREATE TABLE rangama_prototype1_db.proj2v3 (
 	`id` Int( 11 ) AUTO_INCREMENT NOT NULL,
 	`item` VARCHAR( 12) NOT NULL,
 	`key1` VARCHAR( 12 ),

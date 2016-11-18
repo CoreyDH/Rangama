@@ -74,10 +74,15 @@ function generateAnagram( letterCount, callback) {
     if (error) {
       callback (-1);
       }
+
+      var newArr = response.all.filter(function(value) {
+        return value.length >= 3;
+      });
     
-      if (response.all.length < 10) {    // if not enough keys to begin with, return -1
+      if (newArr < 10) {    // if not enough keys to begin with, return -1
         console.log ("not enough keys, returning -1 letter combo = ", letters);
         callback (-1);
+        return;
       }
 
       k = 0;
@@ -126,7 +131,7 @@ connection.connect(function (err) {
 	console.log('DATABASE CONNECTION SUCCESSFULL id ' + connection.threadId);
 });
 
-  for (i=0; i<50; i++) {
+  for (i=0; i<100; i++) {
   var x = generateAnagram( letterCount, function(err, response){
 
   	if (err == -1)  {
@@ -141,7 +146,7 @@ connection.connect(function (err) {
       	}
 
       	recordString = recordString.concat(")");
-		    var queryString = "INSERT INTO armin512 (item, key1,key2,key3,key4,key5,key6,key7,key8,key9,key10,key11,key12,key13,key14,key15,key16,key17,key18,key19,key20,key21,key22,key23,key24,key25,key26,key27,key28,key29,key30) VALUES ";
+		    var queryString = "INSERT INTO proj2v3 (item, key1,key2,key3,key4,key5,key6,key7,key8,key9,key10,key11,key12,key13,key14,key15,key16,key17,key18,key19,key20,key21,key22,key23,key24,key25,key26,key27,key28,key29,key30) VALUES ";
 		    queryString = queryString.concat(recordString);
 		    connection.query(queryString, function (err, result) {
 		    });
