@@ -41,36 +41,21 @@ $(function () {
                 options.input = 'text';
                 options.inputPlaceholder = 'Enter your name.';
                 options.inputValue = self.playerName || '';
-                options.inputValidator = function (value) {
-                    return new Promise(function (resolve, reject) {
-                        if (value) {
-                            resolve()
-                        } else {
-                            reject('You need to write something!')
-                        }
-                    })
-                };
             }
 
             swal(options).then(function (playerName) {
-
-                if (playerName) {
-                    $.ajax({
-                        method: 'POST',
-                        url: '/rangama/score/submit',
-                        data: { playerName: playerName, score: self.score },
-                        dataType: 'json'
-                    }).done(function (data) {
-                        swal({
-                            type: 'success',
-                            title: 'Score Submitted!',
-                            html: 'Click <a href="/rangama/top_scores" style="color:#ee5f5b">here</a> to view the top scores.'
-                        });
+                $.ajax({
+                    method: 'POST',
+                    url: '/rangama/score/submit',
+                    data: { playerName: playerName || 'Guest', score: self.score },
+                    dataType: 'json'
+                }).done(function (data) {
+                    swal({
+                        type: 'success',
+                        title: 'Score Submitted!',
+                        html: 'Click <a href="/rangama/top_scores" style="color:#ee5f5b">here</a> to view the top scores.'
                     });
-                }
-
-
-
+                });
             });
         };
 
@@ -461,7 +446,6 @@ $(function () {
                         for (var j = 0; j < obj1[key].length; j++) {
                             if (obj1[key][j].word.length !== obj2[key][j].length) {
                                 check = false;
-                                console.log(obj1[key][j].word.length, obj2[key][j].length);
                             }
                         }
 
