@@ -2,24 +2,24 @@ var orm = require('../config/orm.js');
 
 var word = {
 	all: function (callback) {
-		orm.all('words', function (data) {
+		orm.all('top_score', function (data) {
 			callback(data);
 		});
 	},
 
 	create: function (insertObj, callback) {
-		orm.create('words', insertObj, function (data) {
+		orm.create('top_score', insertObj, function (data) {
 			callback(data);
 		});
 	},
 	update: function (updateObj, conditionObj, callback) {
-		orm.update('words', updateObj, conditionObj, function (data) {
+		orm.update('top_score', updateObj, conditionObj, function (data) {
 			callback(data);
 		});
 	},
 	delete: function(id, callback) {
 		console.log('enter delete');
-		orm.delete('words', id, function(err, data) {
+		orm.delete('top_score', id, function(err, data) {
 			callback(data);
 		});
 
@@ -46,12 +46,6 @@ var word = {
 	retrieveHighScores: function(callback) {
 		// retrieve high score and return into callback function ordered by descending order.
 		orm.retrieveHighScores('top_score', function(data){
-			// [
-			// 	{
-			// 	name: 'John',
-			// 	score: 5000
-			// 	}
-			// ]
 			callback(data); 
 		});
 	},

@@ -27,6 +27,7 @@ var orm = {
     },
 
     // vals is an array of values that we want to insert
+    // orm.create('top_score', insertObj, function (data)
     create: function(table, vals, cb) {
         connection.query('INSERT INTO ' + table + ' SET ?', [vals], function(err, result) {
             if (err) throw err;
@@ -51,16 +52,8 @@ var orm = {
             var query = 'DELETE FROM ' + table;
         });
     },
-
-    submitScore: function(table, id, score, cb) {
-        connection.query('INSERT INTO ' + table + ' ?' + ' ? ', [vals], [vals], function(err, result) {
-            if (err) throw err;
-            cb(result);
-        });
-    },
-
     retrieveHighScores: function(table,cb) {
-        connection.query('SELECT * FROM ' + table + ' ORDER BY topScore DESC LIMIT 10;', function(err, result) {
+        connection.query('SELECT * FROM ' + table + ' ORDER BY topScore DESC LIMIT 50', function(err, result) {
             if (err) throw err;
             cb(result);
         });
@@ -74,11 +67,11 @@ var orm = {
         var databaseMax = 180;
         var keysMax = 30;
 
-        console.log("\n\nGOT TO RANDOM!!!!!!\n\n");
+        // console.log("\n\nGOT TO RANDOM!!!!!!\n\n");
 
         //**** randomly select an id number
         id = Math.floor((Math.random() * databaseMax) + 1);
-        console.log("db record id = ", id);
+        // console.log("db record id = ", id);
 
 
         // build a query string
