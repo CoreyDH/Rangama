@@ -9,6 +9,10 @@ body {
     background-repeat: no-repeat;
 }
 
+.clear {
+    clear:both;
+}
+
 button:focus button.focus {
     outline:0 !important;
 }
@@ -267,8 +271,28 @@ button:focus button.focus {
     visibility: hidden;
 }
 
+.table {
+    font-size: 16px;
+}
+.table tr {
+    background-color: #25292d;
+}
+
+.table tr:nth-child(even) {
+    background-color: #1d2023;
+}
+
 .form-buttons a {
     min-width: 160px;
+}
+
+#submit-word {
+    min-width: 250px;
+}
+
+.score-entry {
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 footer {
