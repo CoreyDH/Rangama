@@ -104,7 +104,7 @@ router.get('/rangama/anagram/random', function (req, res) {
                 keyWord = result[0]['key' + keyNumber];   // creates a string like "result[0].key3" to reference data
                 // keyWord = eval(keyQuery);        // turn data into a string called keyWord
 
-                if (keyWord === 'undefined' && key < 6) {
+                if (keyWord === 'undefined' && key < 5) {
                     getWords();
                     return;
                 }

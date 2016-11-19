@@ -8,7 +8,7 @@ $(function() {
             this.lastInput = [];
             this.score = 0;
             this.bestWord = '';
-            this.timeLimit = 3; // minutes
+            this.timeLimit = 2; // minutes
             this.time = this.timer();
         };
 
@@ -149,7 +149,7 @@ $(function() {
 
             return $.get('/rangama/anagram/get/' + word.match(/[a-z]/gi).join(''), function(data) {
 
-                console.log(data);
+                // console.log(data);
                 self.setValues(data);
 
                 return data;
@@ -158,7 +158,7 @@ $(function() {
 
         Rangama.prototype.setValues = function(data) {
             var self = this;
-            console.log(data);
+            // console.log(data);
             self.anagram = data;
             self.chosen = data.word.split('');
             self.word = data.word;
@@ -277,7 +277,7 @@ $(function() {
 
                 } else {
                     event.preventDefault();
-                    console.log(keyCode, 'prevented');
+                    // console.log(keyCode, 'prevented');
                 }
             });
 
@@ -338,7 +338,7 @@ $(function() {
 
                 for (var i = 0; i < anagramArr.length; i++) {
                     if (userGuess === anagramArr[i].word) {
-                        console.log(userGuess);
+                        // console.log(userGuess);
 
                         // Add to answer object
                         this.answered[keyIndex].push(anagramArr[i].word);
