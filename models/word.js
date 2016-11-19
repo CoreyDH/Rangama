@@ -25,18 +25,18 @@ var word = {
 
 	},
 	submitScore: function(playerName, score, callback) {
-		// orm.all('top_score', function(data) {
-		// 	for(var i=0; i < data.length; i++) {
-		// 		if(score > data[i].score) {
-		// 			// enter into database
+		orm.all('top_score', function(data) {
+			for(var i=0; i < data.length; i++) {
+				if(score > data[i].score) {
+					// enter into database
 					
-		// 			// if database.length is greater than 50, drop last row from table
-		// 			if (database.length > 50) {
-		// 				delete.data[50];
-		// 			}
-		// 		}
-		// 	}
-		// }
+					// if database.length is greater than 50, drop last row from table
+					if (database.length > 50) {
+						destroy.data[50];
+					}
+				}
+			}
+		});
 
 		if(!err)
 			return true;
@@ -50,11 +50,6 @@ var word = {
 			// 	{
 			// 	name: 'John',
 			// 	score: 5000
-			// 	},
-
-			// 	{
-			// 	name: 'Sam',
-			// 	score: 300
 			// 	}
 			// ]
 			callback(data); 

@@ -1,6 +1,18 @@
-
 <h1>Top Scores </h1>
 
 {{#each this}}
-Player: {{this.playerName}}.Score: {{this.topScore}}<br>
+	Player: {{this.playerName}}<br>
+	Score: {{this.topScore}}<br>
 {{/each}}
+<br>
+
+<form class="create-update-form" action="rangama/create" method="POST">
+
+  Player name/Score:<br>
+  <input type="text" id="playerName">
+
+  <input type="text" name="score" value="50000">
+  <br>
+  <br>
+  <input type="submit" value="Submit">
+</form>
