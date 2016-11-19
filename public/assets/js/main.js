@@ -1,7 +1,7 @@
-$(function () {
-    (function ($) {
+$(function() {
+    (function($) {
 
-        var Rangama = function (playerName) {
+        var Rangama = function(playerName) {
             this.anagram = {};
             this.answered = {};
             this.chosen = [];
@@ -12,14 +12,14 @@ $(function () {
             this.time = this.timer();
         };
 
-        Rangama.prototype.startGame = function () {
+        Rangama.prototype.startGame = function() {
             this.resetScore();
             this.getRandomWord();
             this.time.pause();
             this.time.start();
         };
 
-        Rangama.prototype.endGame = function () {
+        Rangama.prototype.endGame = function() {
 
             var self = this;
 
@@ -43,40 +43,44 @@ $(function () {
                 options.inputValue = self.playerName || '';
             }
 
-            swal(options).then(function (playerName) {
-                $.ajax({
-                    method: 'POST',
-                    url: '/rangama/score/submit',
-                    data: { playerName: playerName || 'Guest', score: self.score },
-                    dataType: 'json'
-                }).done(function (data) {
-                    swal({
-                        type: 'success',
-                        title: 'Score Submitted!',
-                        html: 'Click <a href="/rangama/top_scores" style="color:#ee5f5b">here</a> to view the top scores.'
+            swal(options).then(function(playerName) {
+                if (playerName) {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/rangama/score/submit',
+                        data: { playerName: playerName || 'Guest', score: self.score },
+                        dataType: 'json'
+                    }).done(function(data) {
+
+                        swal({
+                            type: 'success',
+                            title: 'Score Submitted!',
+                            html: 'Click <a href="/rangama/top_scores" style="color:#ee5f5b">here</a> to view the top scores.'
+                        });
                     });
-                });
+                }
+
             });
         };
 
-        Rangama.prototype.timer = function () {
+        Rangama.prototype.timer = function() {
 
             var self = this;
 
             var timerObj = {
-                start: function () {
+                start: function() {
 
                     this.$el = $('#anagram-timer');
                     this.$el.css({ 'color': '#fff' });
                     this.limit = self.timeLimit * 60;
 
                     this.$el.text('');
-                    this.clock = setInterval(function () {
+                    this.clock = setInterval(function() {
                         timerObj.show();
                     }, 1000);
 
                 },
-                show: function () {
+                show: function() {
 
                     this.$el.text(Helper.formatTime(this.limit));
                     this.limit--;
@@ -89,14 +93,14 @@ $(function () {
                         this.stop();
                     }
                 },
-                pause: function () {
+                pause: function() {
                     clearInterval(this.clock);
                 },
-                stop: function () {
+                stop: function() {
                     this.pause();
                     self.endGame();
                 },
-                running: function () {
+                running: function() {
                     return this.limit > 0;
                 }
             }
@@ -104,7 +108,7 @@ $(function () {
             return timerObj;
         }
 
-        Rangama.prototype.newAnagram = function (word, resetScore) {
+        Rangama.prototype.newAnagram = function(word, resetScore) {
 
             var self = this;
 
@@ -113,26 +117,26 @@ $(function () {
             }
 
             // var randomWord = Helper.getRandomWord()
-            self.getAnagram(word).then(function (data) {
+            self.getAnagram(word).then(function(data) {
                 self.loadTemplate('standardDisplay', data);
             });
         };
 
-        Rangama.prototype.getRandomWord = function () {
+        Rangama.prototype.getRandomWord = function() {
 
             var self = this;
 
-            $.get('/rangama/anagram/random', function (data) {
+            $.get('/rangama/anagram/random', function(data) {
                 self.setValues(data);
                 self.loadTemplate('standardDisplay', data);
             });
         };
 
-        Rangama.prototype.getAnagram = function (word) {
+        Rangama.prototype.getAnagram = function(word) {
 
             var self = this;
 
-            return $.get('/rangama/anagram/get/' + word.match(/[a-z]/gi).join(''), function (data) {
+            return $.get('/rangama/anagram/get/' + word.match(/[a-z]/gi).join(''), function(data) {
 
                 // console.log(data);
                 self.setValues(data);
@@ -141,7 +145,7 @@ $(function () {
             })
         };
 
-        Rangama.prototype.setValues = function (data) {
+        Rangama.prototype.setValues = function(data) {
             var self = this;
             // console.log(data);
             self.anagram = data;
@@ -153,11 +157,11 @@ $(function () {
             // console.log(self.answered);
         };
 
-        Rangama.prototype.loadTemplate = function (name, data, selector) {
+        Rangama.prototype.loadTemplate = function(name, data, selector) {
 
             var self = this;
 
-            $.get('../templates/' + name + '.handlebars', function (templateData) {
+            $.get('../templates/' + name + '.handlebars', function(templateData) {
                 var template = Handlebars.compile(templateData);
                 var html = template(data);
 
@@ -168,32 +172,32 @@ $(function () {
         };
 
         // Event Listeners
-        Rangama.prototype.loadEventListeners = function () {
+        Rangama.prototype.loadEventListeners = function() {
 
             var self = this;
 
             self.unloadEventListeners();
 
-            $('.sweet-alert').on('click', '#submit-score', function (event) {
+            $('.sweet-alert').on('click', '#submit-score', function(event) {
 
                 var name = $(this).parent().find('#player-name').val();
                 self.submitScore(name || 'guest');
 
             });
 
-            $('#generate-word').on('click', function (e) {
+            $('#generate-word').on('click', function(e) {
                 self.getRandomWord();
             });
 
-            $('#submit-word').on('click', function (event) {
+            $('#submit-word').on('click', function(event) {
                 self.submitWord($('#user-input').val().split(''));
             });
 
-            $('#clear-word').on('click', function (event) {
+            $('#clear-word').on('click', function(event) {
                 $('#user-input').val('');
             });
 
-            $('body').on('keydown', function (event) {
+            $('body').on('keydown', function(event) {
                 var keyCode = event.which;
 
                 if (keyCode === 192) {
@@ -213,7 +217,7 @@ $(function () {
 
             });
 
-            $('#user-input').on('keydown', function (event) {
+            $('#user-input').on('keydown', function(event) {
 
                 var key = String.fromCharCode(event.which).toLowerCase();
                 var keyCode = event.which;
@@ -266,7 +270,7 @@ $(function () {
                 }
             });
 
-            $('#user-input').on('keyup', function (event) {
+            $('#user-input').on('keyup', function(event) {
                 var keyCode = event.which;
 
                 if (keyCode === 16) {
@@ -275,13 +279,13 @@ $(function () {
 
             });
 
-            $('.chosen-letter').on('click', function (event) {
+            $('.chosen-letter').on('click', function(event) {
                 var letter = $(this).data('letter');
                 $('#user-input').val($('#user-input').val() + letter);
             });
         };
 
-        Rangama.prototype.unloadEventListeners = function () {
+        Rangama.prototype.unloadEventListeners = function() {
             $('#user-input').off();
             $('body').off();
             $('#generate-word').off();
@@ -290,7 +294,7 @@ $(function () {
             $('.chosen-letter').off();
         };
 
-        Rangama.prototype.submitWord = function (currentValue) {
+        Rangama.prototype.submitWord = function(currentValue) {
 
             if (currentValue.length === 0) {
                 return;
@@ -313,7 +317,7 @@ $(function () {
             $('#user-input').val('');
         };
 
-        Rangama.prototype.checkWord = function (userGuess) {
+        Rangama.prototype.checkWord = function(userGuess) {
 
             var keyIndex = Helper.getKey(userGuess);
             var anagramArr = this.anagram.anagrams[keyIndex];
@@ -343,32 +347,32 @@ $(function () {
             return false;
         };
 
-        Rangama.prototype.displayWord = function (word, key, index) {
+        Rangama.prototype.displayWord = function(word, key, index) {
 
             // console.log($('#'+key+'-words > li'));
 
-            $('#' + key + '-words > li').eq(index).find('ul > li').each(function (i, value) {
+            $('#' + key + '-words > li').eq(index).find('ul > li').each(function(i, value) {
                 $(this).text(word[i]);
             });
         };
 
-        Rangama.prototype.addScore = function (score) {
+        Rangama.prototype.addScore = function(score) {
             if (!isNaN(score)) {
                 this.score += score;
                 this.displayScore();
             }
         };
 
-        Rangama.prototype.resetScore = function () {
+        Rangama.prototype.resetScore = function() {
             this.score = 0;
             this.displayScore();
         };
 
-        Rangama.prototype.displayScore = function () {
+        Rangama.prototype.displayScore = function() {
             $('#anagram-score > span').text(this.score);
         };
 
-        Rangama.prototype.submitScore = function (playerName) {
+        Rangama.prototype.submitScore = function(playerName) {
             $.ajax({
                 type: "POST",
                 url: 'rangama/score/submit',
@@ -380,7 +384,7 @@ $(function () {
             });
         };
 
-        Rangama.prototype.displayError = function (msg, type) {
+        Rangama.prototype.displayError = function(msg, type) {
             var $alert = $('.alert');
             type = type || 'warning';
 
@@ -389,7 +393,7 @@ $(function () {
 
             $alert.stop().fadeIn();
 
-            setTimeout(function () {
+            setTimeout(function() {
                 $alert.fadeOut();
             }, 2000);
         };
@@ -399,12 +403,12 @@ $(function () {
 
             $('[data-toggle="popover"]').popover();
 
-            $('#start-game').on('click', function () {
+            $('#start-game').on('click', function() {
                 var game = new Rangama();
 
                 game.startGame();
                 $(this).parent().hide();
-                $('#restart-game').removeClass('hidden').on('click', function () {
+                $('#restart-game').removeClass('hidden').on('click', function() {
                     game.startGame();
                 });
             });
@@ -414,7 +418,7 @@ $(function () {
 
         // Helper functions
         var Helper = {
-            arr_diff: function (a1, a2) {
+            arr_diff: function(a1, a2) {
 
                 var a = [], diff = [];
 
@@ -436,11 +440,11 @@ $(function () {
 
                 return diff;
             },
-            checkMatching: function (obj1, obj2) {
+            checkMatching: function(obj1, obj2) {
 
                 var check = true;
 
-                Object.keys(obj1).forEach(function (key) {
+                Object.keys(obj1).forEach(function(key) {
                     if (obj2[key]) {
 
                         for (var j = 0; j < obj1[key].length; j++) {
@@ -456,19 +460,19 @@ $(function () {
 
                 return check;
             },
-            getEmptyKeys: function (obj) {
+            getEmptyKeys: function(obj) {
 
                 var newObj = {};
 
-                Object.keys(obj).forEach(function (key) {
-                    newObj[key] = obj[key].map(function (value) {
+                Object.keys(obj).forEach(function(key) {
+                    newObj[key] = obj[key].map(function(value) {
                         return [];
                     });
                 });
 
                 return newObj;
             },
-            getKey: function (str) {
+            getKey: function(str) {
                 var currentKeySetup = [
                     0,
                     1,
@@ -487,13 +491,13 @@ $(function () {
 
                 return currentKeySetup[str.length];
             },
-            formatTime: function (totalSeconds) {
+            formatTime: function(totalSeconds) {
                 var minutes = Math.floor(totalSeconds / 60);
                 var seconds = (totalSeconds - minutes * 60) / 100;
 
                 return (minutes + seconds).toFixed(2).replace('.', ':');
             },
-            getScrabblePoints: function (word) {
+            getScrabblePoints: function(word) {
                 var scrablePoints = [1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10];
                 var index;
                 word = word.toLowerCase();
@@ -509,7 +513,7 @@ $(function () {
 
 
         // Handlebar Helpers
-        Handlebars.registerHelper("split", function (word) {
+        Handlebars.registerHelper("split", function(word) {
             return word.split('');
         });
 
