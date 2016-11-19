@@ -319,7 +319,6 @@ $(function () {
 
                 // Check if all anagrams were found
                 if (Helper.checkMatching(self.anagram.anagrams, self.answered)) {
-                    self.displayError('Generated new word', 'danger');
                     self.getRandomWord();
                 }
             } else {
@@ -400,7 +399,7 @@ $(function () {
             var $alert = $('.alert');
             type = type || 'warning';
 
-            $alert.text(msg).removeClass('alert-success').removeClass('alert-warning').removeClass('alert-danger').addClass('alert-' + type);
+            $alert.text(msg).removeClass('alert-success').removeClass('alert-warning').addClass('alert-' + type);
             $alert.alert();
 
             $alert.stop().fadeIn();
